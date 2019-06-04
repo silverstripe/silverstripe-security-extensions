@@ -24,6 +24,8 @@ matrix:
       env: DB=MYSQL RECIPE_VERSION=4.3.x-dev PHPUNIT_TEST=1
     - php: '7.3'
       env: DB=MYSQL RECIPE_VERSION=4.4.x-dev PHPUNIT_TEST=1
+    - php: '7.3'
+      env: DB=MYSQL RECIPE_VERSION=4.4.x-dev NPM_TEST=1
 
 before_script:
   # Extra $PATH

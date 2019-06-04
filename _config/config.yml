@@ -1,0 +1,8 @@
+---
+Name: security-extensions
+---
+SilverStripe\Admin\LeftAndMain:
+  extra_requirements_javascript:
+    - 'silverstripe/security-extensions: client/dist/js/bundle.js'
+  extra_requirements_css:
+    - 'silverstripe/security-extensions: client/dist/styles/bundle.css'
