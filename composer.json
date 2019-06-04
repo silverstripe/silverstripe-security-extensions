@@ -23,6 +23,9 @@
         }
     },
     "extra": {
+        "expose": [
+            "client/dist"
+        ],
         "branch-alias": {
             "dev-master": "1.x-dev"
         }
