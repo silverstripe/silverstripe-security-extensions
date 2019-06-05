@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Button, InputGroup, InputGroupAddon, Input, FormGroup, Label, FormFeedback } from 'reactstrap';
 import { loadComponent } from 'lib/Injector';
 import fetch from 'isomorphic-fetch';
 import Config from 'lib/Config';
+
+// See SudoModeController::getClientConfig()
+const configSectionKey = 'SilverStripe\\SecurityExtensions\\Control\\SudoModeController';
 
 /**
  * Provides a HOC wrapper that will enforce "sudo mode".
@@ -25,7 +27,7 @@ const withSudoMode = (WrappedComponent) => {
       super(props);
 
       this.state = {
-        active: props.sudoModeActive || false,
+        active: Config.getSection(configSectionKey).sudoModeActive || false,
         showVerification: false,
         loading: false,
         errorMessage: null,
@@ -66,7 +68,7 @@ const withSudoMode = (WrappedComponent) => {
       payload.append('Password', this.passwordInput.value);
 
       // Validate the request
-      fetch('/admin/sudomode/activate', {
+      fetch(Config.getSection(configSectionKey).endpoints.activate, {
         method: 'POST',
         body: payload,
       }).then(response => response.json().then(result => {
@@ -232,14 +234,6 @@ const withSudoMode = (WrappedComponent) => {
       return this.renderSudoMode();
     }
   }
-
-  ComponentWithSudoMode.propTypes = {
-    sudoModeActive: PropTypes.bool,
-  };
-
-  ComponentWithSudoMode.defaultProps = {
-    sudoModeActive: false,
-  };
 
   return ComponentWithSudoMode;
 };

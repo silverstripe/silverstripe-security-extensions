@@ -6,6 +6,7 @@ use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\HTTPResponse_Exception;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Authenticator;
 use SilverStripe\Security\Security;
@@ -34,6 +35,19 @@ class SudoModeController extends LeftAndMain
      * @var SudoModeServiceInterface
      */
     private $sudoModeService;
+
+    public function getClientConfig()
+    {
+        /** @var HTTPRequest $request */
+        $request = Injector::inst()->get(HTTPRequest::class);
+
+        return array_merge_recursive(parent::getClientConfig(), [
+            'endpoints' => [
+                'activate' => $this->Link('activate'),
+            ],
+            'sudoModeActive' => $this->getSudoModeService()->check($request->getSession()),
+        ]);
+    }
 
     /**
      * Checks whether sudo mode is active for the current user

@@ -2,10 +2,15 @@
 
 namespace SilverStripe\SecurityExtensions\Tests\Control;
 
+use PHPUnit_Framework_MockObject_MockObject;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\Session;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\SecurityExtensions\Control\SudoModeController;
+use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
 
 class SudoModeControllerTest extends FunctionalTest
 {
@@ -92,5 +97,23 @@ class SudoModeControllerTest extends FunctionalTest
         $result = json_decode((string) $activateResponse->getBody(), true);
         $this->assertFalse($result['result'], 'Should have failed on CSRF token validation');
         $this->assertSame($result['message'], 'Session timed out, please try again.');
+    }
+
+    public function testClientConfig()
+    {
+        /** @var SudoModeServiceInterface&PHPUnit_Framework_MockObject_MockObject $serviceMock */
+        $serviceMock = $this->createMock(SudoModeServiceInterface::class);
+        $serviceMock->expects($this->once())->method('check')->willReturn(true);
+
+        $controller = new SudoModeController();
+        $controller->setSudoModeService($serviceMock);
+
+        $request = new HTTPRequest('GET', '/');
+        $request->setSession(new Session([]));
+        Injector::inst()->registerService($request, HTTPRequest::class);
+
+        $result = $controller->getClientConfig();
+        $this->assertArrayHasKey('activate', $result['endpoints'], 'Client config should provide activation endpoint');
+        $this->assertTrue($result['sudoModeActive'], 'Client config should expose sudo mode status');
     }
 }
