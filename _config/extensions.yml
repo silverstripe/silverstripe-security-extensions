@@ -4,3 +4,7 @@ Name: securityextensionsextensions
 SilverStripe\Security\Member:
   extensions:
     securityMemberExtension: SilverStripe\SecurityExtensions\Extension\MemberExtension
+
+SilverStripe\Security\MemberAuthenticator\LoginHandler:
+  extensions:
+    sudoMode: SilverStripe\SecurityExtensions\Extension\SudoModeOnLoginExtension
