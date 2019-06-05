@@ -32,6 +32,14 @@ class SudoModeController extends LeftAndMain
     ];
 
     /**
+     * A user help documentation link to find out more about sudo mode
+     *
+     * @config
+     * @var string
+     */
+    private static $help_link = 'http://google.com';
+
+    /**
      * @var SudoModeServiceInterface
      */
     private $sudoModeService;
@@ -46,6 +54,7 @@ class SudoModeController extends LeftAndMain
                 'activate' => $this->Link('activate'),
             ],
             'sudoModeActive' => $this->getSudoModeService()->check($request->getSession()),
+            'helpLink' => $this->config()->get('help_link'),
         ]);
     }
 

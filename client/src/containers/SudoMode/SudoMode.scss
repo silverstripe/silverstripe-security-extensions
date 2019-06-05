@@ -10,10 +10,6 @@ $sudo-mode-notice-spacing: 1rem;
     margin-bottom: 0;
   }
 
-  &__notice-help {
-    margin-left: 3px;
-  }
-
   &__notice-icon {
     display: flex;
     font-size: $sudo-mode-icon-size;
@@ -21,7 +17,7 @@ $sudo-mode-notice-spacing: 1rem;
   }
 
   &__notice-button {
-    margin-left: $sudo-mode-notice-spacing;
+    margin-right: $sudo-mode-notice-spacing;
   }
 
   &__verify {

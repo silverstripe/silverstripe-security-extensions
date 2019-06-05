@@ -51,7 +51,7 @@ const withSudoMode = (WrappedComponent) => {
     handleConfirmNotice() {
       this.setState({
         showVerification: true,
-      });
+      }, () => this.passwordInput.focus());
     }
 
     /**
@@ -84,7 +84,7 @@ const withSudoMode = (WrappedComponent) => {
         return this.setState({
           loading: false,
           errorMessage: result.message,
-        });
+        }, () => this.passwordInput.focus());
       }));
     }
 
@@ -122,30 +122,27 @@ const withSudoMode = (WrappedComponent) => {
       const { i18n } = window;
       const { showVerification } = this.state;
 
+      const helpLink = Config.getSection(configSectionKey).helpLink || null;
+
       return (
         <p className="sudo-mode__notice sudo-mode__notice--required">
           <span className="sudo-mode__notice-icon font-icon-lock" aria-hidden />
-          <span className="sudo-mode__notice-message">
-            {
-              i18n._t(
-                'SudoMode.REQUIRED_NOTICE',
-                'This action requires "sudo mode". Please verify yourself to continue.'
-              )
-            }
-            { /* todo add a help link for this */ }
-            <a href="#" className="sudo-mode__notice-help">
-              { i18n._t('SudoMode.HELP_TEXT', 'What is this?') }
-            </a>
-          </span>
           { !showVerification && (
             <Button
               className="sudo-mode__notice-button"
               outline
               onClick={this.handleConfirmNotice}
             >
-              { i18n._t('SudoMode.VERIFY', 'Verify') }
+              { i18n._t('SudoMode.VERIFY', 'Verify to continue') }
             </Button>
           ) }
+          <span className="sudo-mode__notice-message">
+            { helpLink && (
+              <a href={helpLink} className="sudo-mode__notice-help" target="_blank" rel="noopener noreferrer">
+                { i18n._t('SudoMode.HELP_TEXT', 'What is this?') }
+              </a>
+            ) }
+          </span>
         </p>
       );
     }
