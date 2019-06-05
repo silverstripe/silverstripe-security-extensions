@@ -1,5 +1,5 @@
 ---
-Name: security-extensions
+Name: securityextensionsconfig
 ---
 SilverStripe\Admin\LeftAndMain:
   extra_requirements_javascript:
