@@ -62,16 +62,19 @@ class SudoModeController extends LeftAndMain
             return $this->httpError(404);
         }
 
-        if (!SecurityToken::inst()->check($request)) {
+        if (!SecurityToken::inst()->checkRequest($request)) {
             return $this->jsonResponse([
                 'result' => false,
-                'message' => 'Invalid CSRF token provided',
+                'message' => _t(__CLASS__ . '.TIMEOUT', 'Session timed out, please try again.'),
             ], 403);
         }
 
         // Validate password
         if (!$this->checkPassword($request)) {
-            return $this->jsonResponse(['result' => false, 'message' => 'Invalid credentials']);
+            return $this->jsonResponse([
+                'result' => false,
+                'message' => _t(__CLASS__ . '.INVALID', 'Incorrect password'),
+            ]);
         }
 
         // Activate sudo mode and return successful result

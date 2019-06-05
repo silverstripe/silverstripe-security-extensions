@@ -1,6 +1,8 @@
 /* global window */
-import registerTransformations from 'boot/registerTransformations';
+import registerComponents from './registerComponents';
+import registerTransformations from './registerTransformations';
 
 window.document.addEventListener('DOMContentLoaded', () => {
+  registerComponents();
   registerTransformations();
 });

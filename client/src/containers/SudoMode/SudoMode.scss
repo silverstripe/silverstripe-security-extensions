@@ -1,0 +1,35 @@
+// Note: we don't couple to admin versions, so define our own variables for this module
+$form-field-padding-y: .5385rem;
+$sudo-mode-icon-size: 1.5rem;
+$sudo-mode-notice-spacing: 1rem;
+
+.sudo-mode {
+  &__notice {
+    align-items: center;
+    display: flex;
+    margin-bottom: 0;
+  }
+
+  &__notice-help {
+    margin-left: 3px;
+  }
+
+  &__notice-icon {
+    display: flex;
+    font-size: $sudo-mode-icon-size;
+    margin-right: $sudo-mode-notice-spacing;
+  }
+
+  &__notice-button {
+    margin-left: $sudo-mode-notice-spacing;
+  }
+
+  &__verify {
+    margin-top: $sudo-mode-notice-spacing;
+  }
+
+  // Removing defaults from admin in SilverStripe 4.x. Specificity required.
+  &__verify-form-group.form-group {
+    margin: 0;
+  }
+}

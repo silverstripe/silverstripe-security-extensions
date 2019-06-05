@@ -56,7 +56,7 @@ class SudoModeControllerTest extends FunctionalTest
         $this->assertSame(200, $response->getStatusCode());
         $result = json_decode((string) $response->getBody(), true);
         $this->assertFalse($result['result'], 'Should have failed with incorrect password');
-        $this->assertEquals('Invalid credentials', $result['message']);
+        $this->assertEquals('Incorrect password', $result['message']);
     }
 
     public function testActivateSudoModeWithValidCredentials()
@@ -91,6 +91,6 @@ class SudoModeControllerTest extends FunctionalTest
         $this->assertSame(403, $activateResponse->getStatusCode());
         $result = json_decode((string) $activateResponse->getBody(), true);
         $this->assertFalse($result['result'], 'Should have failed on CSRF token validation');
-        $this->assertSame($result['message'], 'Invalid CSRF token provided');
+        $this->assertSame($result['message'], 'Session timed out, please try again.');
     }
 }

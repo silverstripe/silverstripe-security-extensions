@@ -22,9 +22,11 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "reactstrap": "^8.0.0"
   },
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.5",
