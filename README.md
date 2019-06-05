@@ -25,6 +25,11 @@ Sudo mode represents a heightened level of permission in that you are more certa
 the person whose account is logged in. This is performed by re-validating that the account's password is correct, and
 will then last for a certain amount of time (configurable) until it will be checked again.
 
+Sudo mode will automatically be enabled for the configured lifetime when a user logs into the CMS. Note that if the
+PHP session lifetime expires before the sudo mode lifetime, that sudo mode will also be cleared (and re-enabled when
+the user logs in again). If the user leaves their CMS open, or continues to use it, for an extended period of time
+with automatic refreshing in the background, sudo mode will eventually deactivate once the max lifetime is reached.
+
 #### Enabling sudo mode for controllers
 
 You can add the `SilverStripe\SecurityExtensions\Services\SudoModeServiceInterface` as a dependency to a controller
@@ -77,11 +82,13 @@ point.
 You will need to ensure that the component's respective PHP FormField has the following attributes added to its
 form schema (see `FormField::getSchemaData()`):
 
-* `SecurityID`: for Cross-Site-Request-Forgery protection - can be obtained via `SecurityToken::inst()->getValue()`
 * `sudoModeActive`: whether sudo mode is currently active - can be obtained via `SudoModeServiceInterface::check()`
 
 While the `sudoModeActive` prop will be used in the SudoMode HOC, backend validation is also implemented to ensure
 that the frontend UI cannot simply be tampered with to avoid re-validation on sensitive operations.
+
+Ensure you protected your endpoints from [cross site request forgery (CSRF)](https://docs.silverstripe.org/en/4/developer_guides/forms/form_security/#cross-site-request-forgery-csrf)
+at the same time. 
 
 ## Versioning
 

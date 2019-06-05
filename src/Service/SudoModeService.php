@@ -11,7 +11,10 @@ class SudoModeService implements SudoModeServiceInterface
     use Configurable;
 
     /**
-     * The lifetime that sudo mode authorization lasts for, in minutes
+     * The lifetime that sudo mode authorization lasts for, in minutes.
+     *
+     * Note that if the PHP session times out before this lifetime is reached, it will automatically be reset.
+     * @see \SilverStripe\Control\Session::$timeout
      *
      * @config
      * @var int
