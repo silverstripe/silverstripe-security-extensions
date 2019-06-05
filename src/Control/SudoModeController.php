@@ -19,6 +19,8 @@ class SudoModeController extends LeftAndMain
 {
     private static $url_segment = 'sudomode';
 
+    private static $ignore_menuitem = true;
+
     private static $allowed_actions = [
         'check',
         'activate',
@@ -60,7 +62,7 @@ class SudoModeController extends LeftAndMain
             return $this->httpError(404);
         }
 
-        if (SecurityToken::is_enabled() && !SecurityToken::singleton()->check($request)) {
+        if (!SecurityToken::inst()->check($request)) {
             return $this->jsonResponse([
                 'result' => false,
                 'message' => 'Invalid CSRF token provided',
