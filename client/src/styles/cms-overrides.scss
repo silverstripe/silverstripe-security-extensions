@@ -1,0 +1,12 @@
+/**
+ * Not actually an override, this adds a new style that allows form holders with the class applied to remove the
+ * divider below them in order to 'pseudo-group' elements together.
+ */
+.form-group--no-divider {
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+  &::after {
+    display: none;
+  }
+}
