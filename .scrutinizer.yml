@@ -1,6 +1,9 @@
 inherit: true
 
 build:
+  dependencies:
+    override:
+      - composer install --prefer-dist
   nodes:
     analysis:
       tests:
