@@ -88,7 +88,7 @@ class SudoModeController extends LeftAndMain
         if (!SecurityToken::inst()->checkRequest($request)) {
             return $this->jsonResponse([
                 'result' => false,
-                'message' => _t(__CLASS__ . '.TIMEOUT', 'Session timed out, please try again.'),
+                'message' => _t(__CLASS__ . '.TIMEOUT', 'Session timed out, please refresh and try again.'),
             ], 403);
         }
 

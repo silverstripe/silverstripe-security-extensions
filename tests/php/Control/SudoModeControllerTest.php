@@ -96,7 +96,7 @@ class SudoModeControllerTest extends FunctionalTest
         $this->assertSame(403, $activateResponse->getStatusCode());
         $result = json_decode((string) $activateResponse->getBody(), true);
         $this->assertFalse($result['result'], 'Should have failed on CSRF token validation');
-        $this->assertSame($result['message'], 'Session timed out, please try again.');
+        $this->assertSame($result['message'], 'Session timed out, please refresh and try again.');
     }
 
     public function testClientConfig()
