@@ -30,7 +30,6 @@ class SudoModeService implements SudoModeServiceInterface
 
     public function check(Session $session): bool
     {
-        return false;
         $lastActivated = $session->get(self::SUDO_MODE_SESSION_KEY);
         // Not activated at all
         if (!$lastActivated) {

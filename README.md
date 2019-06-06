@@ -77,15 +77,21 @@ point.
 
 ![Sudo mode HOC example](docs/_images/sudomode.png)
 
+Example implementation:
+
+```jsx
+import WithSudoMode from '../containers/SudoMode/SudoMode';
+
+Injector.transform('MyComponentWithSudoMode', (updater) => {
+  updater.component('MyComponent', WithSudoMode);
+});
+```
+
 #### Requirements for adding to a component
 
-You will need to ensure that the component's respective PHP FormField has the following attributes added to its
-form schema (see `FormField::getSchemaData()`):
-
-* `sudoModeActive`: whether sudo mode is currently active - can be obtained via `SudoModeServiceInterface::check()`
-
-While the `sudoModeActive` prop will be used in the SudoMode HOC, backend validation is also implemented to ensure
-that the frontend UI cannot simply be tampered with to avoid re-validation on sensitive operations.
+While the `sudoModeActive` prop is gathered automatically from the Redux configuration store, backend validation is
+also implemented to ensure that the frontend UI cannot simply be tampered with to avoid re-validation on sensitive
+operations.
 
 Ensure you protected your endpoints from [cross site request forgery (CSRF)](https://docs.silverstripe.org/en/4/developer_guides/forms/form_security/#cross-site-request-forgery-csrf)
 at the same time. 
