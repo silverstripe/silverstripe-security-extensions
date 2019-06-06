@@ -30,7 +30,7 @@ class MemberExtension extends DataExtension
             );
             $fields->insertAfter('Password', $requireNewPassword);
 
-            $fields->dataFieldByName('Password')->addExtraClass('form-group--no-divider');
+            $fields->dataFieldByName('Password')->addExtraClass('form-field--no-divider mb-0 pb-0');
         }
 
         return $fields;
