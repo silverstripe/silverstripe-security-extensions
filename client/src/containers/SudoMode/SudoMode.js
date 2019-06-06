@@ -126,25 +126,25 @@ const withSudoMode = (WrappedComponent) => {
       const helpLink = Config.getSection(configSectionKey).helpLink || null;
 
       return (
-        <p className="sudo-mode__notice sudo-mode__notice--required">
-          <span className="sudo-mode__notice-icon font-icon-lock" aria-hidden />
-          { !showVerification && (
-            <Button
-              className="sudo-mode__notice-button"
-              outline
-              onClick={this.handleConfirmNotice}
-            >
-              { i18n._t('SudoMode.VERIFY', 'Verify to continue') }
-            </Button>
-          ) }
-          <span className="sudo-mode__notice-message">
+        <div className="sudo-mode__notice sudo-mode__notice--required">
+          <p className="sudo-mode__notice-message">
+            { i18n._t('SudoMode.VERIFY_ITS_YOU', 'Verify it\'s you first.') }
             { helpLink && (
               <a href={helpLink} className="sudo-mode__notice-help" target="_blank" rel="noopener noreferrer">
                 { i18n._t('SudoMode.HELP_TEXT', 'What is this?') }
               </a>
             ) }
-          </span>
-        </p>
+          </p>
+          { !showVerification && (
+            <Button
+              className="sudo-mode__notice-button font-icon-lock"
+              color="info"
+              onClick={this.handleConfirmNotice}
+            >
+              { i18n._t('SudoMode.VERIFY', 'Verify to continue') }
+            </Button>
+          ) }
+        </div>
       );
     }
 
@@ -161,6 +161,7 @@ const withSudoMode = (WrappedComponent) => {
         type: 'password',
         name: 'sudoModePassword',
         id: 'sudoModePassword',
+        className: 'no-change-track',
         onKeyPress: this.handleVerifyInputKeyPress,
         innerRef: (node) => this.setPasswordInput(node),
       };
@@ -178,7 +179,7 @@ const withSudoMode = (WrappedComponent) => {
               <InputGroupAddon addonType="append">
                 <Button
                   className="sudo-mode__verify-button"
-                  outline
+                  color="info"
                   onClick={this.handleVerify}
                 >
                   { i18n._t('SudoMode.VERIFY', 'Verify') }
@@ -206,14 +207,14 @@ const withSudoMode = (WrappedComponent) => {
 
       if (loading) {
         return (
-          <div className="sudo-mode">
+          <div className="sudo-mode alert alert-info">
             <LoadingComponent block />
           </div>
         );
       }
 
       return (
-        <div className="sudo-mode">
+        <div className="sudo-mode alert alert-info">
           { this.renderSudoModeNotice() }
           { showVerification && this.renderSudoModeVerification() }
         </div>
