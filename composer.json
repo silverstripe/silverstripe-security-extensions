@@ -20,7 +20,7 @@
     "autoload": {
         "psr-4": {
             "SilverStripe\\SecurityExtensions\\": "src/",
-            "SilverStripe\\SecurityExtensions\\Tests\\": "tests/"
+            "SilverStripe\\SecurityExtensions\\Tests\\": "tests/php/"
         }
     },
     "extra": {
