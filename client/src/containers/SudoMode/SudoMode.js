@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, InputGroup, InputGroupAddon, Input, FormGroup, Label, FormFeedback } from 'reactstrap';
 import { loadComponent } from 'lib/Injector';
 import fetch from 'isomorphic-fetch';
@@ -51,7 +52,7 @@ const withSudoMode = (WrappedComponent) => {
     handleConfirmNotice() {
       this.setState({
         showVerification: true,
-      }, () => this.passwordInput.focus());
+      }, () => this.passwordInput && this.passwordInput.focus());
     }
 
     /**
@@ -220,17 +221,16 @@ const withSudoMode = (WrappedComponent) => {
     }
 
     render() {
-      const passProps = {
-        ...this.props,
-      };
-
-      if (this.isSudoModeActive()) {
-        return <WrappedComponent {...passProps} />;
+      if (!this.isSudoModeActive()) {
+        return this.renderSudoMode();
       }
-
-      return this.renderSudoMode();
+      return <WrappedComponent {...this.props} />;
     }
   }
+
+  ComponentWithSudoMode.propTypes = {
+    LoadingComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  };
 
   return ComponentWithSudoMode;
 };
