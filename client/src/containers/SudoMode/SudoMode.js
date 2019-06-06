@@ -163,7 +163,7 @@ const withSudoMode = (WrappedComponent) => {
         id: 'sudoModePassword',
         className: 'no-change-track',
         onKeyPress: this.handleVerifyInputKeyPress,
-        innerRef: (node) => this.setPasswordInput(node),
+        innerRef: this.setPasswordInput,
       };
       const validationProps = errorMessage ? { valid: false } : {};
 
