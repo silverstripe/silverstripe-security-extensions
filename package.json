@@ -12,7 +12,7 @@
     "dev": "NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "css": "WEBPACK_CHILD=css npm run build",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "coverage": "jest --coverage",
     "lock": "npm-shrinkwrap --dev",
     "lint": "eslint client/src && sass-lint client/src",
@@ -22,14 +22,17 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "reactstrap": "^8.0.0"
   },
   "devDependencies": {
     "@silverstripe/eslint-config": "^0.0.5",
     "@silverstripe/webpack-config": "^1.1.0",
     "babel-jest": "^23.6.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "jest-cli": "^23.6.0"
   },
   "jest": {

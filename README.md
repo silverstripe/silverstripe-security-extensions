@@ -1,25 +1,100 @@
-# SilverStripe CKAN Registry
+# SilverStripe Security Extensions
 
-[![Build Status](https://travis-ci.com/silverstripe/silverstripe-ckan-registry.svg?branch=master)](https://travis-ci.com/silverstripe/silverstripe-ckan-registry)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-ckan-registry/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-ckan-registry/?branch=master)
-[![codecov](https://codecov.io/gh/silverstripe/silverstripe-ckan-registry/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-ckan-registry)
-[![License](https://poser.pugx.org/silverstripe/ckan-registry/license.svg)](https://github.com/silverstripe/silverstripe-ckan-registry#license)
+[![Build Status](https://travis-ci.com/creative-commoners/silverstripe-security-extensions.svg?branch=master)](https://travis-ci.com/creative-commoners/silverstripe-security-extensions)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/creative-commoners/silverstripe-security-extensions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/creative-commoners/silverstripe-security-extensions/?branch=master)
+[![codecov](https://codecov.io/gh/creative-commoners/silverstripe-security-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/creative-commoners/silverstripe-security-extensions)
+[![License](https://poser.pugx.org/silverstripe/security-extensions/license.svg)](https://github.com/creative-commoners/silverstripe-security-extensions#license)
 [![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 ## Overview
 
-The SilverStripe CKAN Registry module lets CMS authors easily create pages in their SilverStripe websites which can
-pull in and display dynamic data from [CKAN](https://ckan.org/) data sets.
+This module is a polyfill for some security related features that will become part of the core SilverStripe
+product, but are required for older SilverStripe 3.7 and 4.x support in the meantime.
 
 ## Installation
 
 ```
-$ composer require silverstripe/ckan-registry 1.0.x-dev
+$ composer require silverstripe/security-extensions 1.x-dev
 ```
 
-## Documentation
+## Features
 
-Developer and user guide documentation [is available in the "docs" directory](docs/en/index.md).
+### Sudo mode
+
+Sudo mode represents a heightened level of permission in that you are more certain that the current user is actually
+the person whose account is logged in. This is performed by re-validating that the account's password is correct, and
+will then last for a certain amount of time (configurable) until it will be checked again.
+
+Sudo mode will automatically be enabled for the configured lifetime when a user logs into the CMS. Note that if the
+PHP session lifetime expires before the sudo mode lifetime, that sudo mode will also be cleared (and re-enabled when
+the user logs in again). If the user leaves their CMS open, or continues to use it, for an extended period of time
+with automatic refreshing in the background, sudo mode will eventually deactivate once the max lifetime is reached.
+
+#### Enabling sudo mode for controllers
+
+You can add the `SilverStripe\SecurityExtensions\Services\SudoModeServiceInterface` as a dependency to a controller
+that requires sudo mode for one of its actions:
+
+```php
+class MyController extends Controller
+{
+    private $sudoModeService;
+    
+    private static $dependencies = ['SudoModeService' => '%$' . SudoModeServiceInterface::class];
+    
+    public function setSudoModeService(SudoModeServiceInterface $sudoModeService): self
+    {
+        $this->sudoModeService = $sudoModeService;
+        return $this;
+    }
+}
+```
+
+Performing a sudo mode verification check in a controller action is simply using the service to validate the request:
+
+```php
+public function myAction(HTTPRequest $request): HTTPResponse
+{
+    if (!$this->sudoModeService->check($request->getSession()) {
+        return $this->httpError(403, 'Sudo mode is required for this action');
+    }
+    // ... continue with sensitive operations
+}
+``` 
+
+### Using sudo mode in a React component
+
+This module defines a [React Higher-Order-Component](https://reactjs.org/docs/higher-order-components.html) which can
+be applied to React components in your module or code to intercept component rendering and show a "sudo mode required"
+information and login screen, which will validate, activate sudo mode, and re-render the wrapped component afterwards
+on success.
+
+**Note:** the JavaScript injector [does not currently support injecting transformations/HOCs](https://github.com/silverstripe/react-injector/issues/4),
+so we have coupled the application of these [injector transformations](https://docs.silverstripe.org/en/4/developer_guides/customising_the_admin_interface/reactjs_redux_and_graphql/#transforming-services-using-middleware)
+into this module itself for the silverstripe/mfa module. Unfortunately, if you want to apply this to your own code
+you will need to either duplicate the `SudoMode` HOC into your project or module and apply the transformation at that
+point.
+
+![Sudo mode HOC example](docs/_images/sudomode.png)
+
+Example implementation:
+
+```jsx
+import WithSudoMode from '../containers/SudoMode/SudoMode';
+
+Injector.transform('MyComponentWithSudoMode', (updater) => {
+  updater.component('MyComponent', WithSudoMode);
+});
+```
+
+#### Requirements for adding to a component
+
+While the `sudoModeActive` prop is gathered automatically from the Redux configuration store, backend validation is
+also implemented to ensure that the frontend UI cannot simply be tampered with to avoid re-validation on sensitive
+operations.
+
+Ensure you protected your endpoints from [cross site request forgery (CSRF)](https://docs.silverstripe.org/en/4/developer_guides/forms/form_security/#cross-site-request-forgery-csrf)
+at the same time. 
 
 ## Versioning
 
@@ -35,9 +110,9 @@ but if you're overriding methods then please test your work before upgrading.
 
 ## Reporting Issues
 
-Please [create an issue](https://github.com/silverstripe/silverstripe-ckan-registry/issues)
+Please [create an issue](https://github.com/creative-commoners/silverstripe-security-extensions/issues)
 for any bugs you've found, or features you're missing.
 
 ## License
 
-This module is released under the [BSD 3-Clause License](LICENSE).
+This module is released under the [BSD 3-Clause License](LICENSE.md).
