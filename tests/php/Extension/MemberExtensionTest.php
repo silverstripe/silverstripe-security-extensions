@@ -22,7 +22,7 @@ class MemberExtensionTest extends SapphireTest
         /** @var Member&MemberExtension $targetMember */
         $targetMember = $this->objFromFixture(Member::class, 'someone');
         $this->logInWithPermission('ADMIN');
-        $field = $targetMember->getCMSFields()->dataFieldByName('RequirePasswordChangeOnNextLogin');
+        $field = $targetMember->getCMSFields()->dataFieldByName('RequiresPasswordChangeOnNextLogin');
         $this->assertNotNull($field);
     }
 
@@ -31,7 +31,7 @@ class MemberExtensionTest extends SapphireTest
         /** @var Member&MemberExtension $targetMember */
         $targetMember = $this->objFromFixture(Member::class, 'someone');
         $this->logInAs($targetMember);
-        $field = $targetMember->getCMSFields()->dataFieldByName('RequirePasswordChangeOnNextLogin');
+        $field = $targetMember->getCMSFields()->dataFieldByName('RequiresPasswordChangeOnNextLogin');
         $this->assertNull($field);
     }
 
@@ -40,11 +40,11 @@ class MemberExtensionTest extends SapphireTest
         /** @var Member&MemberExtension $targetMember */
         $targetMember = $this->objFromFixture(Member::class, 'anyone');
         $this->logInAs('someone');
-        $field = $targetMember->getCMSFields()->dataFieldByName('RequirePasswordChangeOnNextLogin');
+        $field = $targetMember->getCMSFields()->dataFieldByName('RequiresPasswordChangeOnNextLogin');
         $this->assertNull($field);
     }
 
-    public function testCheckingRequirePasswordChangeOnNextLoginWillSetPasswordExpiryToNow()
+    public function testCheckingRequiresPasswordChangeOnNextLoginWillSetPasswordExpiryToNow()
     {
         $mockDate = '2019-03-02 00:00:00';
         DBDateTime::set_mock_now($mockDate);
@@ -57,10 +57,89 @@ class MemberExtensionTest extends SapphireTest
         $this->logInWithPermission('ADMIN');
         $fields = $targetMember->getCMSFields();
         $form = new Form(null, 'SomeForm', $fields, new FieldList());
-        $field = $fields->dataFieldByName('RequirePasswordChangeOnNextLogin');
+        $field = $fields->dataFieldByName('RequiresPasswordChangeOnNextLogin');
         $field->setValue(1);
         $form->saveInto($targetMember);
 
         $this->assertEquals($mockDate, $targetMember->PasswordExpiry);
+    }
+
+    public function testCheckingPasswordChangeUpdatesFutureExpiriesToNow()
+    {
+        $mockDate = '2019-03-02 00:00:00';
+        DBDateTime::set_mock_now($mockDate);
+
+        /** @var Member&MemberExtension $targetMember */
+        $targetMember = $this->objFromFixture(Member::class, 'willexpire');
+
+        $this->assertTrue($targetMember->dbObject('PasswordExpiry')->inFuture());
+
+        $this->logInWithPermission('ADMIN');
+        $fields = $targetMember->getCMSFields();
+        $form = new Form(null, 'SomeForm', $fields, new FieldList());
+        $field = $fields->dataFieldByName('RequiresPasswordChangeOnNextLogin');
+        $field->setValue(1);
+        $form->saveInto($targetMember);
+
+        $this->assertEquals($mockDate, $targetMember->PasswordExpiry);
+    }
+
+    public function testCheckingPasswordChangeDoesNotAlterPastDates()
+    {
+        $mockDate = '2019-03-02 00:00:00';
+        DBDateTime::set_mock_now($mockDate);
+
+        /** @var Member&MemberExtension $targetMember */
+        $targetMember = $this->objFromFixture(Member::class, 'expired');
+        $originalValue = $targetMember->PasswordExpiry;
+
+        $this->assertTrue($targetMember->dbObject('PasswordExpiry')->inPast());
+
+        $this->logInWithPermission('ADMIN');
+        $fields = $targetMember->getCMSFields();
+        $form = new Form(null, 'SomeForm', $fields, new FieldList());
+        $field = $fields->dataFieldByName('RequiresPasswordChangeOnNextLogin');
+        $field->setValue(1);
+        $form->saveInto($targetMember);
+
+        $this->assertEquals($originalValue, $targetMember->PasswordExpiry);
+    }
+
+    public function testSavingUncheckedPasswordChangeNullsPastDates()
+    {
+        $mockDate = '2019-03-02 00:00:00';
+        DBDateTime::set_mock_now($mockDate);
+
+        /** @var Member&MemberExtension $targetMember */
+        $targetMember = $this->objFromFixture(Member::class, 'expired');
+
+        $this->logInWithPermission('ADMIN');
+        $fields = $targetMember->getCMSFields();
+        $form = new Form(null, 'SomeForm', $fields, new FieldList());
+        $field = $fields->dataFieldByName('RequiresPasswordChangeOnNextLogin');
+        $field->setValue(0);
+        $form->saveInto($targetMember);
+
+        $this->assertNull($targetMember->PasswordExpiry);
+    }
+
+    public function testSavingUncheckedPasswordChangeDoesNotAlterFutureDates()
+    {
+        $mockDate = '2019-03-02 00:00:00';
+        DBDateTime::set_mock_now($mockDate);
+
+        /** @var Member&MemberExtension $targetMember */
+        $targetMember = $this->objFromFixture(Member::class, 'willexpire');
+        $originalValue = $targetMember->PasswordExpiry;
+
+        $this->logInWithPermission('ADMIN');
+        $fields = $targetMember->getCMSFields();
+        $form = new Form(null, 'SomeForm', $fields, new FieldList());
+        $field = $fields->dataFieldByName('RequiresPasswordChangeOnNextLogin');
+        $field->setValue(0);
+        $form->saveInto($targetMember);
+
+        $this->assertNotNull($targetMember->PasswordExpiry);
+        $this->assertEquals($originalValue, $targetMember->PasswordExpiry);
     }
 }

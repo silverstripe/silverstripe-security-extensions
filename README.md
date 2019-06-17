@@ -39,9 +39,9 @@ that requires sudo mode for one of its actions:
 class MyController extends Controller
 {
     private $sudoModeService;
-    
+
     private static $dependencies = ['SudoModeService' => '%$' . SudoModeServiceInterface::class];
-    
+
     public function setSudoModeService(SudoModeServiceInterface $sudoModeService): self
     {
         $this->sudoModeService = $sudoModeService;
@@ -60,7 +60,7 @@ public function myAction(HTTPRequest $request): HTTPResponse
     }
     // ... continue with sensitive operations
 }
-``` 
+```
 
 ### Using sudo mode in a React component
 
@@ -94,7 +94,26 @@ also implemented to ensure that the frontend UI cannot simply be tampered with t
 operations.
 
 Ensure you protected your endpoints from [cross site request forgery (CSRF)](https://docs.silverstripe.org/en/4/developer_guides/forms/form_security/#cross-site-request-forgery-csrf)
-at the same time. 
+at the same time.
+
+### Require password change on next log in
+
+Administrators with the ability to administer members can see a checkbox in the CMS under the area to set the member's password.
+Checking this box will set the password expiry to the current date, meaning the next time the member logs in they will be required to choose a new password for their account.
+
+The date is set selectively in order to not batter the database with updates to that member's records each time an unrelated setting is changed and saved. The matrix is as follows (`-` indicates no change):
+
+ Expiry Date  | Checked   | Unchecked
+--------------|-----------|-----------
+ **Null**     | now       | -
+ **Future**   | now       | -
+ **Expired**  | -         | null
+
+No change is made when setting this field and the password is already expired for auditing purposes (an administrator could see how long ago a password expired).
+
+Similarly no change is made when unsetting this field and the expiry date is in the future, it should remain so - the checkbox is for immediately requiring a new password on the _next_ log in.
+
+Given the above two paragraphs, it should not be possible to reach these cases under normal (CMS) usage, as the UI reflects the current state of the PasswordExpiry field on load. The checkbox will be checked if the current password is already expired.
 
 ## Versioning
 
