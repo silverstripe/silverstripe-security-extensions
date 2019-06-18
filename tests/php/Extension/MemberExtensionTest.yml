@@ -5,3 +5,11 @@ SilverStripe\Security\Member:
   anyone:
     FirstName: 'Anyone'
     Email: 'anyone@example.com'
+  expired:
+    Firstname: 'Expired'
+    Email: 'expired@example.com'
+    PasswordExpiry: '2018-01-01'
+  willexpire:
+    Firstname: 'William'
+    Email: 'william@example.com'
+    PasswordExpiry: '3018-01-01'

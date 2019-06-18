@@ -25,8 +25,8 @@ class MemberExtension extends DataExtension
         // - Don't show if a user views their own profile (just let them reset their own password)
         if ($currentUser && ($currentUser->ID !== $this->owner->ID) && $this->owner->canEdit()) {
             $requireNewPassword = CheckboxField::create(
-                'RequirePasswordChangeOnNextLogin',
-                _t(__CLASS__ . 'RequirePasswordChangeOnNextLogin', 'Require password change on next login')
+                'RequiresPasswordChangeOnNextLogin',
+                _t(__CLASS__ . 'RequiresPasswordChangeOnNextLogin', 'Requires password change on next login')
             );
             $fields->insertAfter('Password', $requireNewPassword);
 
@@ -36,18 +36,36 @@ class MemberExtension extends DataExtension
         return $fields;
     }
 
+    public function getRequiresPasswordChangeOnNextLogin()
+    {
+        return $this->owner->isPasswordExpired();
+    }
+
     /**
      * Set password expiry to now to enforce a change of password next log in
      *
      * @param int|null $dataValue boolean representation checked/not checked {@see CheckboxField::dataValue}
      * @return Member
      */
-    public function saveRequirePasswordChangeOnNextLogin($dataValue)
+    public function saveRequiresPasswordChangeOnNextLogin($dataValue)
     {
-        if ($dataValue && $this->owner->canEdit()) {
-            // An expired password automatically requires a password change on logging in
-            $this->owner->PasswordExpiry = DBDatetime::now()->Rfc2822();
+        $member = $this->owner;
+
+        if (!$member->canEdit()) {
+            return $member;
         }
-        return $this->owner;
+
+        $currentValue = $member->PasswordExpiry;
+        $currentDate = $member->dbObject('PasswordExpiry');
+
+        if ($dataValue && (!$currentValue || $currentDate->inFuture())) {
+            // Only alter future expiries - this way an admin could see how long ago a password expired still
+            $member->PasswordExpiry = DBDatetime::now()->Rfc2822();
+        } elseif (!$dataValue && $member->isPasswordExpired()) {
+            // Only unset if the expiry date is in the past
+            $member->PasswordExpiry = null;
+        }
+
+        return $member;
     }
 }
