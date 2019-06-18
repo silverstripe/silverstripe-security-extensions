@@ -142,4 +142,32 @@ class MemberExtensionTest extends SapphireTest
         $this->assertNotNull($targetMember->PasswordExpiry);
         $this->assertEquals($originalValue, $targetMember->PasswordExpiry);
     }
+
+    public function testSavingChangePasswordOnNextLoginIsNotPossibleIfTheCurrentMemberCannotEditTheMemberBeingSaved()
+    {
+        /** @var Member&MemberExtension $targetMember */
+        $targetMember = $this->objFromFixture(Member::class, 'expired');
+        $originalValue = $targetMember->PasswordExpiry;
+
+        $this->logInAs('someone');
+        $fields = $targetMember->saveRequiresPasswordChangeOnNextLogin(0);
+
+        $this->assertEquals($originalValue, $targetMember->PasswordExpiry);
+    }
+
+    public function testGetRequiresPasswordChangeOnNextLogin()
+    {
+        $this->assertTrue(
+            $this->objFromFixture(Member::class, 'expired')->getRequiresPasswordChangeOnNextLogin(),
+            'PasswordExpiry date in the past should require a change'
+        );
+        $this->assertFalse(
+            $this->objFromFixture(Member::class, 'willexpire')->getRequiresPasswordChangeOnNextLogin(),
+            'PasswordExpiry date in the past should NOT require a change'
+        );
+        $this->assertFalse(
+            $this->objFromFixture(Member::class, 'someone')->getRequiresPasswordChangeOnNextLogin(),
+            'PasswordExpiry is NULL should NOT require a change'
+        );
+    }
 }
