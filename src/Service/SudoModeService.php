@@ -19,7 +19,7 @@ class SudoModeService implements SudoModeServiceInterface
      * @config
      * @var int
      */
-    private static $lifetime_minutes = 180;
+    private static $lifetime_minutes = 45;
 
     /**
      * The session key that is used to store the timestamp for when sudo mode was last activated

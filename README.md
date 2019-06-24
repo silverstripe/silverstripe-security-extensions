@@ -30,6 +30,16 @@ PHP session lifetime expires before the sudo mode lifetime, that sudo mode will 
 the user logs in again). If the user leaves their CMS open, or continues to use it, for an extended period of time
 with automatic refreshing in the background, sudo mode will eventually deactivate once the max lifetime is reached.
 
+#### Configuring the lifetime
+
+The default `SudoModeServiceInterface` implementation is `SudoModeService`, and its lifetime can be configured with
+YAML. You should read the lifetime value using `SudoModeServiceInterface::getLifetime()`.
+
+```yaml
+SilverStripe\SecurityExtensions\Services\SudoModeService:
+  lifetime_minutes: 25
+```
+
 #### Enabling sudo mode for controllers
 
 You can add the `SilverStripe\SecurityExtensions\Services\SudoModeServiceInterface` as a dependency to a controller
