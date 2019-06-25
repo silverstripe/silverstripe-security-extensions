@@ -1,9 +1,9 @@
 # SilverStripe Security Extensions
 
-[![Build Status](https://travis-ci.com/creative-commoners/silverstripe-security-extensions.svg?branch=master)](https://travis-ci.com/creative-commoners/silverstripe-security-extensions)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/creative-commoners/silverstripe-security-extensions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/creative-commoners/silverstripe-security-extensions/?branch=master)
-[![codecov](https://codecov.io/gh/creative-commoners/silverstripe-security-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/creative-commoners/silverstripe-security-extensions)
-[![License](https://poser.pugx.org/silverstripe/security-extensions/license.svg)](https://github.com/creative-commoners/silverstripe-security-extensions#license)
+[![Build Status](https://travis-ci.com/silverstripe/silverstripe-security-extensions.svg?branch=master)](https://travis-ci.com/silverstripe/silverstripe-security-extensions)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/?branch=master)
+[![codecov](https://codecov.io/gh/silverstripe/silverstripe-security-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-security-extensions)
+[![License](https://poser.pugx.org/silverstripe/security-extensions/license.svg)](https://github.com/silverstripe/silverstripe-security-extensions#license)
 [![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 ## Overview
