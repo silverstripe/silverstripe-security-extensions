@@ -26,7 +26,7 @@ class MemberExtension extends DataExtension
         if ($currentUser && ($currentUser->ID !== $this->owner->ID) && $this->owner->canEdit()) {
             $requireNewPassword = CheckboxField::create(
                 'RequiresPasswordChangeOnNextLogin',
-                _t(__CLASS__ . 'RequiresPasswordChangeOnNextLogin', 'Requires password change on next log in')
+                _t(__CLASS__ . '.RequiresPasswordChangeOnNextLogin', 'Requires password change on next log in')
             );
             $fields->insertAfter('Password', $requireNewPassword);
 
