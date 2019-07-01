@@ -10,7 +10,7 @@ use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
 class SudoModeOnLoginExtension extends Extension
 {
     /**
-     * Activates sudo mode on a successful login
+     * Activates sudo mode on a successful log in
      */
     public function afterLogin(): void
     {
