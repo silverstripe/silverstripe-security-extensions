@@ -2,19 +2,17 @@
 
 namespace SilverStripe\SecurityExtensions\Service;
 
-use SilverStripe\Control\Session;
-use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\FieldType\DBDatetime;
+use Session;
+use SS_Datetime;
+use SS_Object;
 
-class SudoModeService implements SudoModeServiceInterface
+class SudoModeService extends SS_Object implements SudoModeServiceInterface
 {
-    use Configurable;
-
     /**
      * The lifetime that sudo mode authorization lasts for, in minutes.
      *
      * Note that if the PHP session times out before this lifetime is reached, it will automatically be reset.
-     * @see \SilverStripe\Control\Session::$timeout
+     * @see Session::$timeout
      *
      * @config
      * @var int
@@ -30,20 +28,20 @@ class SudoModeService implements SudoModeServiceInterface
 
     public function check(Session $session): bool
     {
-        $lastActivated = $session->get(self::SUDO_MODE_SESSION_KEY);
+        $lastActivated = $session::get(self::SUDO_MODE_SESSION_KEY);
         // Not activated at all
         if (!$lastActivated) {
             return false;
         }
 
         // Activated within the last "lifetime" window
-        $nowTimestamp = DBDatetime::now()->getTimestamp();
+        $nowTimestamp = SS_Datetime::now()->Format('U');
         return $lastActivated > ($nowTimestamp - $this->getLifetime() * 60);
     }
 
     public function activate(Session $session): bool
     {
-        $session->set(self::SUDO_MODE_SESSION_KEY, DBDatetime::now()->getTimestamp());
+        $session::set(self::SUDO_MODE_SESSION_KEY, SS_Datetime::now()->Format('U'));
         return true;
     }
 

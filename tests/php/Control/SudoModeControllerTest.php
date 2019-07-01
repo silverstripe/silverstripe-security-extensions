@@ -2,13 +2,11 @@
 
 namespace SilverStripe\SecurityExtensions\Tests\Control;
 
+use FunctionalTest;
+use Member;
 use PHPUnit_Framework_MockObject_MockObject;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\Session;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\Security\Member;
-use SilverStripe\Security\SecurityToken;
+use SecurityToken;
+use Session;
 use SilverStripe\SecurityExtensions\Control\SudoModeController;
 use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
 
@@ -21,7 +19,7 @@ class SudoModeControllerTest extends FunctionalTest
      */
     private $securityTokenEnabled;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
@@ -33,9 +31,12 @@ class SudoModeControllerTest extends FunctionalTest
         /** @var Member $member */
         $member = Member::get()->byID($memberID);
         $member->changePassword('0p3nS3samE!');
+
+        // Logging in above will have set sudo mode, clear it for tests
+        Session::clear('sudo-mode-last-activated');
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
         if ($this->securityTokenEnabled) {
             SecurityToken::enable();
@@ -72,7 +73,7 @@ class SudoModeControllerTest extends FunctionalTest
 
         $this->assertSame(200, $activateResponse->getStatusCode());
         $result = json_decode((string) $activateResponse->getBody(), true);
-        $this->assertTrue($result['result'], 'Should have activated sudo mode');
+        $this->assertTrue($result['result'], 'Should have activated sudo mode' . print_r($result, true));
 
         $checkResponse = $this->get(SudoModeController::singleton()->Link('check'));
         $this->assertSame(200, $checkResponse->getStatusCode());
@@ -107,10 +108,7 @@ class SudoModeControllerTest extends FunctionalTest
 
         $controller = new SudoModeController();
         $controller->setSudoModeService($serviceMock);
-
-        $request = new HTTPRequest('GET', '/');
-        $request->setSession(new Session([]));
-        Injector::inst()->registerService($request, HTTPRequest::class);
+        $controller->setSession(new Session([]));
 
         $result = $controller->getClientConfig();
         $this->assertArrayHasKey('activate', $result['endpoints'], 'Client config should provide activation endpoint');

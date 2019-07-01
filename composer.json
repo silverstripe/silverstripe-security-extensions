@@ -23,11 +23,6 @@
             "SilverStripe\\SecurityExtensions\\Tests\\": "tests/php/"
         }
     },
-    "extra": {
-        "expose": [
-            "client/dist"
-        ]
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

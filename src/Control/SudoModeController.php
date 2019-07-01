@@ -2,16 +2,15 @@
 
 namespace SilverStripe\SecurityExtensions\Control;
 
-use SilverStripe\Admin\LeftAndMain;
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Control\HTTPResponse_Exception;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\ORM\ValidationResult;
-use SilverStripe\Security\Authenticator;
-use SilverStripe\Security\Security;
-use SilverStripe\Security\SecurityToken;
+use Authenticator;
+use Injector;
+use LeftAndMain;
+use Member;
+use SecurityToken;
 use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
+use SS_HTTPRequest;
+use SS_HTTPResponse;
+use SS_HTTPResponse_Exception;
 
 /**
  * Responsible for checking and verifying whether sudo mode is enabled
@@ -28,7 +27,7 @@ class SudoModeController extends LeftAndMain
     ];
 
     private static $dependencies = [
-        'SudoModeService' => '%$' . SudoModeServiceInterface::class,
+        'SudoModeService' => '%$SilverStripe\\SecurityExtensions\\Service\\SudoModeServiceInterface',
     ];
 
     /**
@@ -46,28 +45,24 @@ class SudoModeController extends LeftAndMain
 
     public function getClientConfig()
     {
-        /** @var HTTPRequest $request */
-        $request = Injector::inst()->get(HTTPRequest::class);
-
-        return array_merge_recursive(parent::getClientConfig(), [
+        return [
             'endpoints' => [
                 'activate' => $this->Link('activate'),
             ],
-            'sudoModeActive' => $this->getSudoModeService()->check($request->getSession()),
+            'sudoModeActive' => $this->getSudoModeService()->check($this->getSession()),
             'helpLink' => $this->config()->get('help_link'),
-        ]);
+        ];
     }
 
     /**
      * Checks whether sudo mode is active for the current user
      *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
+     * @return SS_HTTPResponse
      */
-    public function check(HTTPRequest $request): HTTPResponse
+    public function check(): SS_HTTPResponse
     {
         return $this->jsonResponse([
-            'active' => $this->getSudoModeService()->check($request->getSession()),
+            'active' => $this->getSudoModeService()->check($this->getSession()),
         ]);
     }
 
@@ -75,11 +70,11 @@ class SudoModeController extends LeftAndMain
      * After validating the request data including password against the current member, activate sudo mode
      * for the current member.
      *
-     * @param HTTPRequest $request
-     * @return HTTPResponse
-     * @throws HTTPResponse_Exception If the request was not made with POST
+     * @param SS_HTTPRequest $request
+     * @return SS_HTTPResponse
+     * @throws SS_HTTPResponse_Exception If the request was not made with POST
      */
-    public function activate(HTTPRequest $request): HTTPResponse
+    public function activate(SS_HTTPRequest $request): SS_HTTPResponse
     {
         if (!$request->isPOST()) {
             return $this->httpError(404);
@@ -101,7 +96,7 @@ class SudoModeController extends LeftAndMain
         }
 
         // Activate sudo mode and return successful result
-        $this->getSudoModeService()->activate($request->getSession());
+        $this->getSudoModeService()->activate($this->getSession());
         return $this->jsonResponse(['result' => true]);
     }
 
@@ -109,30 +104,34 @@ class SudoModeController extends LeftAndMain
      * Checks the provided password is valid for the current member. Will return false if insufficient data
      * is available to validate the request.
      *
-     * @param HTTPRequest $request
+     * @param SS_HTTPRequest $request
      * @return bool
      */
-    private function checkPassword(HTTPRequest $request): bool
+    private function checkPassword(SS_HTTPRequest $request): bool
     {
         $password = $request->postVar('Password');
         if (!$password) {
             return false;
         }
 
-        $currentMember = Security::getCurrentUser();
+        $currentMember = Member::currentUser();
         if (!$currentMember) {
             return false;
         }
 
-        $result = ValidationResult::create();
-        $authenticators = Security::singleton()->getApplicableAuthenticators(Authenticator::CHECK_PASSWORD);
-        foreach ($authenticators as $authenticator) {
-            $authenticator->checkPassword($currentMember, $password, $result);
-            if (!$result->isValid()) {
-                break;
+        $uniqueIdentifier = Member::config()->get('unique_identifier_field');
+        $authenticationData = $request->postVars() + ['Email' => $currentMember->{$uniqueIdentifier}];
+
+        $authenticators = Authenticator::get_authenticators();
+        foreach ($authenticators as $authenticatorClass) {
+            /** @var Authenticator $authenticator */
+            $authenticator = Injector::inst()->create($authenticatorClass);
+            $result = $authenticator::authenticate($authenticationData);
+            if ($result) {
+                return true;
             }
         }
-        return $result->isValid();
+        return false;
     }
 
     /**
@@ -140,11 +139,11 @@ class SudoModeController extends LeftAndMain
      *
      * @param array $body
      * @param int $code
-     * @return HTTPResponse
+     * @return SS_HTTPResponse
      */
-    private function jsonResponse(array $body, int $code = 200): HTTPResponse
+    private function jsonResponse(array $body, int $code = 200): SS_HTTPResponse
     {
-        $response = new HTTPResponse();
+        $response = new SS_HTTPResponse();
         $response
             ->addHeader('Content-Type', 'application/json')
             ->setBody(json_encode($body))

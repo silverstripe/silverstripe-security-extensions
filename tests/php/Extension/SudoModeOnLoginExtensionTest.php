@@ -2,37 +2,28 @@
 
 namespace SilverStripe\SecurityExtensions\Tests\Extension;
 
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Dev\FunctionalTest;
-use SilverStripe\Security\Member;
-use SilverStripe\Security\MemberAuthenticator\LoginHandler;
-use SilverStripe\Security\MemberAuthenticator\MemberAuthenticator;
-use SilverStripe\Security\Security;
+use Authenticator;
+use FunctionalTest;
+use Member;
+use MemberAuthenticator;
+use Security;
 use SilverStripe\SecurityExtensions\Control\SudoModeController;
 use SilverStripe\SecurityExtensions\Extension\SudoModeOnLoginExtension;
 
 class SudoModeOnLoginExtensionTest extends FunctionalTest
 {
-    protected static $required_extensions = [
-        LoginHandler::class => [
+    protected $requiredExtensions = [
+        Member::class => [
             SudoModeOnLoginExtension::class,
         ],
     ];
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
         // Disable MFA on account
-        Injector::inst()->load([
-            Security::class => [
-                'properties' => [
-                    'Authenticators' => [
-                        'default' => '%$' . MemberAuthenticator::class,
-                    ],
-                ],
-            ],
-        ]);
+        Authenticator::set_default_authenticator(MemberAuthenticator::class);
     }
 
     public function testSudoModeActivatesOnLogin()
@@ -42,12 +33,12 @@ class SudoModeOnLoginExtensionTest extends FunctionalTest
         /** @var Member $member */
         $member = Member::get()->byID($memberID);
         $member->changePassword('0p3nS3samE!');
-        $this->logOut();
+        $member->logOut();
 
         // Perform a login using the new password
         $this->autoFollowRedirection = true;
         $this->get(Security::login_url());
-        $response = $this->submitForm('MemberLoginForm_LoginForm', 'action_doLogin', [
+        $response = $this->submitForm('MemberLoginForm_LoginForm', 'action_dologin', [
             'Email' => $member->Email,
             'Password' => '0p3nS3samE!',
         ]);

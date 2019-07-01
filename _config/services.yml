@@ -1,6 +1,6 @@
 ---
 Name: securityextensionsservices
 ---
-SilverStripe\Core\Injector\Injector:
+Injector:
   SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface:
     class: SilverStripe\SecurityExtensions\Service\SudoModeService

@@ -2,9 +2,9 @@
 
 namespace SilverStripe\SecurityExtensions\Extension;
 
-use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Core\Extension;
-use SilverStripe\Core\Injector\Injector;
+use Controller;
+use Extension;
+use Injector;
 use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
 
 class SudoModeOnLoginExtension extends Extension
@@ -12,16 +12,13 @@ class SudoModeOnLoginExtension extends Extension
     /**
      * Activates sudo mode on a successful login
      */
-    public function afterLogin(): void
+    public function memberLoggedIn(): void
     {
-        if (Injector::inst()->has(HTTPRequest::class)) {
+        $session = Controller::curr()->getSession();
+        if ($session) {
             /** @var SudoModeServiceInterface $service */
             $service = Injector::inst()->get(SudoModeServiceInterface::class);
-
-            /** @var HTTPRequest $request */
-            $request = Injector::inst()->get(HTTPRequest::class);
-
-            $service->activate($request->getSession());
+            $service->activate(Controller::curr()->getSession());
         }
     }
 }
