@@ -19,8 +19,6 @@ class SudoModeController extends LeftAndMain
 {
     private static $url_segment = 'sudomode';
 
-    private static $ignore_menuitem = true;
-
     private static $allowed_actions = [
         'check',
         'activate',
