@@ -40,7 +40,9 @@ class MemberExtensionTest extends SapphireTest
     {
         /** @var Member&MemberExtension $targetMember */
         $targetMember = $this->objFromFixture(Member::class, 'anyone');
-        $targetMember->logIn();
+        /** @var Member&MemberExtension $someone */
+        $someone = $this->objFromFixture(Member::class, 'someone');
+        $someone->logIn();
         $field = $targetMember->getCMSFields()->dataFieldByName('RequiresPasswordChangeOnNextLogin');
         $this->assertNull($field);
     }

@@ -18,7 +18,7 @@ class SudoModeOnLoginExtension extends Extension
         if ($session) {
             /** @var SudoModeServiceInterface $service */
             $service = Injector::inst()->get(SudoModeServiceInterface::class);
-            $service->activate(Controller::curr()->getSession());
+            $service->activate($session);
         }
     }
 }

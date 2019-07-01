@@ -3,6 +3,7 @@ Name: securityextensionsconfig
 ---
 LeftAndMain:
   extra_requirements_javascript:
+    - 'security-extensions/client/dist/js/injector.js'
     - 'security-extensions/client/dist/js/bundle.js'
   extra_requirements_css:
     - 'security-extensions/client/dist/styles/bundle.css'

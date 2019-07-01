@@ -1,0 +1,12 @@
+// Only for SilverStripe 3.x
+.cms {
+  .form-field--no-divider .field {
+    border-bottom: 0;
+  }
+
+  .confirmedpassword.field,
+  .confirmedpassword .field {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}

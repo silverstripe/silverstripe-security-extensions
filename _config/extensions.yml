@@ -5,3 +5,7 @@ Member:
   extensions:
     securityMemberExtension: SilverStripe\SecurityExtensions\Extension\MemberExtension
     sudoMode: SilverStripe\SecurityExtensions\Extension\SudoModeOnLoginExtension
+
+LeftAndMain:
+  extensions:
+    sudoModeExtension: SilverStripe\SecurityExtensions\Extension\LeftAndMainExtension

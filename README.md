@@ -11,11 +11,50 @@
 This module is a polyfill for some security related features that will become part of the core SilverStripe
 product, but are required for older SilverStripe 3.7 and 4.x support in the meantime.
 
+## Versions
+
+* SilverStripe ^3.7: silverstripe/security-extensions ^3.0
+* SilverStripe ^4.1: silverstripe/security-extensions ^4.0
+
 ## Installation
 
 ```
-$ composer require silverstripe/security-extensions 1.x-dev
+$ composer require silverstripe/security-extensions ^3.0
 ```
+
+## Integration into SilverStripe 3
+
+### React Injector
+
+The SilverStripe 3 backported version of this module also contains a distributable package that exposes the
+[React Injector](https://github.com/silverstripe/react-injector), so that packages may use React components,
+transformations, etc from SilverStripe 4.x modules in SilverStripe 3.x. In order to use Injector, you must ensure
+that you have first added the Injector bundle:
+
+```php
+Requirements::javascript('security-extensions/client/dist/js/injector.js');
+```
+
+```yaml
+LeftAndMain:
+  extra_requirements_js:
+    - security-extensions/client/dist/js/injector.js
+```
+
+**Please note:** In the SilverStripe 4.x version of this module, the React Injector is exposed in the same way for
+frontend modules to use via the silverstripe/mfa module, rather than in this module. In SilverStripe 4.x you should
+continue to use Injector from the silverstripe/admin module (when in the CMS/admin context) until a time at which
+React Injector is entirely decoupled into its own NPM package (`@silverstripe/react-injector`). For frontend use
+in SilverStripe 4.x, you should do as described above but reference the silverstripe/mfa Injector bundle instead.
+
+### `lib/Config` shim
+
+This module also contains a standalone `lib/Config` equivalent to gather `LeftAndMain::getClientConfig()` information
+for JavaScript component usage, and expose it to the page via `window.ss.config`. This can be seen in
+`SilverStripe\SecurityExtensions\Extension\LeftAndMainExtension::init()`.
+
+**Please note:** this is build for the purpose of this module, and silverstripe/mfa to be built on top of it. We do
+not encourage third-party or user code to extend this architecture for React components in SilverStripe 3.
 
 ## Features
 
@@ -50,7 +89,9 @@ class MyController extends Controller
 {
     private $sudoModeService;
 
-    private static $dependencies = ['SudoModeService' => '%$' . SudoModeServiceInterface::class];
+    private static $dependencies = [
+        'SudoModeService' => '%$SilverStripe\\SecurityExtensions\\Service\\SudoModeServiceInterface',
+    ];
 
     public function setSudoModeService(SudoModeServiceInterface $sudoModeService): self
     {
@@ -63,9 +104,9 @@ class MyController extends Controller
 Performing a sudo mode verification check in a controller action is simply using the service to validate the request:
 
 ```php
-public function myAction(HTTPRequest $request): HTTPResponse
+public function myAction(): SS_HTTPResponse
 {
-    if (!$this->sudoModeService->check($request->getSession()) {
+    if (!$this->sudoModeService->check($this->getSession()) {
         return $this->httpError(403, 'Sudo mode is required for this action');
     }
     // ... continue with sensitive operations

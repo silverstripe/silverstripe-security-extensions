@@ -73,7 +73,7 @@ class SudoModeControllerTest extends FunctionalTest
 
         $this->assertSame(200, $activateResponse->getStatusCode());
         $result = json_decode((string) $activateResponse->getBody(), true);
-        $this->assertTrue($result['result'], 'Should have activated sudo mode' . print_r($result, true));
+        $this->assertTrue($result['result'], 'Should have activated sudo mode');
 
         $checkResponse = $this->get(SudoModeController::singleton()->Link('check'));
         $this->assertSame(200, $checkResponse->getStatusCode());

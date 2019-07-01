@@ -7,6 +7,7 @@ use Injector;
 use LeftAndMain;
 use Member;
 use SecurityToken;
+use Session;
 use SilverStripe\SecurityExtensions\Service\SudoModeServiceInterface;
 use SS_HTTPRequest;
 use SS_HTTPResponse;
@@ -47,7 +48,7 @@ class SudoModeController extends LeftAndMain
             'endpoints' => [
                 'activate' => $this->Link('activate'),
             ],
-            'sudoModeActive' => $this->getSudoModeService()->check($this->getSession()),
+            'sudoModeActive' => $this->getSudoModeService()->check($this->getSession() ?: new Session([])),
             'helpLink' => $this->config()->get('help_link'),
         ];
     }
