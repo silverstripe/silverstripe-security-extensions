@@ -1,0 +1,7 @@
+{
+  "SudoMode.VERIFY_ITS_YOU": "Verify it's you first.",
+  "SudoMode.HELP_TEXT": "What is this?",
+  "SudoMode.VERIFY_TO_CONTINUE": "Verify to continue",
+  "SudoMode.ENTER_PASSWORD": "Enter your password",
+  "SudoMode.VERIFY": "Verify"
+}

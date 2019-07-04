@@ -1,4 +1,4 @@
-import Injector from 'lib/Injector';
+import Injector from 'lib/Injector'; // eslint-disable-line
 import WithSudoMode from '../containers/SudoMode/SudoMode';
 
 export default () => {

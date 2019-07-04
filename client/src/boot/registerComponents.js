@@ -1,4 +1,4 @@
-import Injector from 'lib/Injector';
+import Injector from 'lib/Injector'; // eslint-disable-line
 import LoadingIndicator from '../components/LoadingIndicator/LoadingIndicator';
 
 export default () => {

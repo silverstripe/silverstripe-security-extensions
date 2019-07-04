@@ -2,7 +2,7 @@
 
 namespace SilverStripe\SecurityExtensions\Service;
 
-use SilverStripe\Control\Session;
+use Session;
 
 /**
  * A service class responsible for activating and checking the current status of elevated permission levels

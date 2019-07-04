@@ -1,0 +1,7 @@
+en:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Incorrect password'
+    MENUTITLE: SilverStripe\SecurityExtensions\Control\SudoModeController
+    TIMEOUT: 'Session timed out, please refresh and try again.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Requires password change on next log in'

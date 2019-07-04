@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, InputGroup, InputGroupAddon, Input, FormGroup, Label, FormFeedback } from 'reactstrap';
-import { loadComponent } from 'lib/Injector';
+import { loadComponent } from 'lib/Injector'; // eslint-disable-line
 import fetch from 'isomorphic-fetch';
 import Config from 'lib/Config';
 
@@ -120,7 +120,7 @@ const withSudoMode = (WrappedComponent) => {
      * @returns {HTMLElement}
      */
     renderSudoModeNotice() {
-      const { i18n } = window;
+      const { ss: { i18n } } = window;
       const { showVerification } = this.state;
 
       const helpLink = Config.getSection(configSectionKey).helpLink || null;
@@ -141,7 +141,7 @@ const withSudoMode = (WrappedComponent) => {
               color="info"
               onClick={this.handleConfirmNotice}
             >
-              { i18n._t('SudoMode.VERIFY', 'Verify to continue') }
+              { i18n._t('SudoMode.VERIFY_TO_CONTINUE', 'Verify to continue') }
             </Button>
           ) }
         </div>
@@ -154,7 +154,7 @@ const withSudoMode = (WrappedComponent) => {
      * @returns {HTMLElement}
      */
     renderSudoModeVerification() {
-      const { i18n } = window;
+      const { ss: { i18n } } = window;
       const { errorMessage } = this.state;
 
       const inputProps = {

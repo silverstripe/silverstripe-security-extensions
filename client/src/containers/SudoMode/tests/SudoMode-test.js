@@ -18,6 +18,7 @@ let ComponentWithSudoMode = null;
 describe('SudoMode', () => {
   beforeEach(() => {
     // Set window config
+    window.ss = window.ss || {};
     window.ss.config = {
       SecurityID: 1234567890,
       sections: [
@@ -30,6 +31,10 @@ describe('SudoMode', () => {
           },
         },
       ],
+    };
+
+    window.ss.i18n = {
+      _t: (string) => string,
     };
 
     ComponentWithSudoMode = withSudoMode(TestComponent);

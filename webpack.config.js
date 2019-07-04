@@ -3,7 +3,6 @@ const webpackConfig = require('@silverstripe/webpack-config');
 
 const {
   resolveJS,
-  externalJS,
   moduleJS,
   pluginJS,
   moduleCSS,
@@ -23,15 +22,18 @@ const config = [
   {
     name: 'js',
     entry: {
-      'bundle': `${PATHS.SRC}/bundles/bundle.js`,
+      bundle: `${PATHS.SRC}/bundles/bundle.js`,
+      injector: `${PATHS.MODULES}/@silverstripe/react-injector/dist/injector.js`,
     },
     output: {
       path: PATHS.DIST,
       filename: 'js/[name].js',
     },
     devtool: (ENV !== 'production') ? 'source-map' : '',
+    externals: {
+      'lib/Injector': 'Injector',
+    },
     resolve: resolveJS(ENV, PATHS),
-    externals: externalJS(ENV, PATHS),
     module: moduleJS(ENV, PATHS),
     plugins: pluginJS(ENV, PATHS),
   },
