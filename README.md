@@ -76,7 +76,7 @@ public function myAction(HTTPRequest $request): HTTPResponse
 
 This module defines a [React Higher-Order-Component](https://reactjs.org/docs/higher-order-components.html) which can
 be applied to React components in your module or code to intercept component rendering and show a "sudo mode required"
-information and login screen, which will validate, activate sudo mode, and re-render the wrapped component afterwards
+information and log in screen, which will validate, activate sudo mode, and re-render the wrapped component afterwards
 on success.
 
 **Note:** the JavaScript injector [does not currently support injecting transformations/HOCs](https://github.com/silverstripe/react-injector/issues/4),

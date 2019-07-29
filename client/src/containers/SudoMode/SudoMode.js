@@ -141,7 +141,7 @@ const withSudoMode = (WrappedComponent) => {
               color="info"
               onClick={this.handleConfirmNotice}
             >
-              { i18n._t('SudoMode.VERIFY', 'Verify to continue') }
+              { i18n._t('SudoMode.VERIFY_TO_CONTINUE', 'Verify to continue') }
             </Button>
           ) }
         </div>
