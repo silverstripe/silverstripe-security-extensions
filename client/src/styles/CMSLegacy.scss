@@ -9,4 +9,19 @@
     margin-bottom: 0;
     padding-bottom: 0;
   }
+
+  .sudo-mode__container {
+    @import '~bootstrap/scss/reboot';
+    @import '~bootstrap/scss/alert';
+    @import '~bootstrap/scss/buttons';
+    @import '~bootstrap/scss/forms';
+    @import '~bootstrap/scss/input-group';
+
+    // Reset extra margin given to form groups
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    max-width: $grid-x * 64;
+  }
 }
