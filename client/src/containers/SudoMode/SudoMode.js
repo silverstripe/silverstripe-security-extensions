@@ -207,16 +207,20 @@ const withSudoMode = (WrappedComponent) => {
 
       if (loading) {
         return (
-          <div className="sudo-mode alert alert-info">
-            <LoadingComponent block />
+          <div className="sudo-mode__container">
+            <div className="sudo-mode alert alert-info">
+              <LoadingComponent block />
+            </div>
           </div>
         );
       }
 
       return (
-        <div className="sudo-mode alert alert-info">
-          { this.renderSudoModeNotice() }
-          { showVerification && this.renderSudoModeVerification() }
+        <div className="sudo-mode__container">
+          <div className="sudo-mode alert alert-info">
+            { this.renderSudoModeNotice() }
+            { showVerification && this.renderSudoModeVerification() }
+          </div>
         </div>
       );
     }

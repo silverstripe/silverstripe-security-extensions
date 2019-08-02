@@ -1,3 +1,11 @@
+// Bootstrap dependencies
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+// Framework variables
+@import '../framework/admin/scss/themes/_default';
+
 @import "../components/LoadingIndicator/LoadingIndicator";
 @import "../containers/SudoMode/SudoMode";
 @import "../styles/CMSLegacy";
