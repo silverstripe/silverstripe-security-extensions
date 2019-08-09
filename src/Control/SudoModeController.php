@@ -42,6 +42,13 @@ class SudoModeController extends LeftAndMain
      */
     private $sudoModeService;
 
+    /**
+     * Explicitly disable required permissions for sudo mode checks
+     *
+     * @var boolean
+     */
+    private static $required_permission_codes = false;
+
     public function getClientConfig()
     {
         return [
