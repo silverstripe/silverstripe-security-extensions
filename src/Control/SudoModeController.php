@@ -125,8 +125,7 @@ class SudoModeController extends LeftAndMain
             return false;
         }
 
-        $uniqueIdentifier = Member::config()->get('unique_identifier_field');
-        $authenticationData = $request->postVars() + ['Email' => $currentMember->{$uniqueIdentifier}];
+        $authenticationData = $this->getAuthenticationData($request, $currentMember);
 
         $authenticators = Authenticator::get_authenticators();
         foreach ($authenticators as $authenticatorClass) {
@@ -138,6 +137,24 @@ class SudoModeController extends LeftAndMain
             }
         }
         return false;
+    }
+
+    /**
+     * Extracts authentication data from the current request and member, in order to pass it to the core
+     * authenticators.
+     *
+     * @param SS_HTTPRequest $request
+     * @param Member $member
+     * @return array
+     */
+    protected function getAuthenticationData(SS_HTTPRequest $request, Member $member): array
+    {
+        $uniqueIdentifier = (string) Member::config()->get('unique_identifier_field');
+        $authenticationData = $request->postVars() + [$uniqueIdentifier => $member->{$uniqueIdentifier}];
+
+        $this->extend('updateAuthenticationData', $authenticationData, $request, $member);
+
+        return $authenticationData;
     }
 
     /**
