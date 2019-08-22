@@ -125,8 +125,8 @@ class SudoModeController extends LeftAndMain
             return false;
         }
 
-        $uniqueIdentifier = Member::config()->get('unique_identifier_field');
-        $authenticationData = $request->postVars() + ['Email' => $currentMember->{$uniqueIdentifier}];
+        $uniqueIdentifier = (string) Member::config()->get('unique_identifier_field');
+        $authenticationData = $request->postVars() + [$uniqueIdentifier => $currentMember->{$uniqueIdentifier}];
 
         $authenticators = Authenticator::get_authenticators();
         foreach ($authenticators as $authenticatorClass) {
