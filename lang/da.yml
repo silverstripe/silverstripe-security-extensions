@@ -1,0 +1,7 @@
+da:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Forkert kodeord'
+    MENUTITLE: ''
+    TIMEOUT: 'Sessionen er udløbet, opdater venligts og forsøg igen.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Kræver ændring af kodeord næste gang der logges ind'

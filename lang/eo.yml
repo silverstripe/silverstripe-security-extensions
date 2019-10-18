@@ -1,0 +1,7 @@
+eo:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Nevalida pasvorto'
+    MENUTITLE: SilverStripe\SecurityExtensions\Control\SudoModeController
+    TIMEOUT: 'Seanco eltempiĝis. Bonvolu refreŝigi kaj reprovi.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Bezonas ŝanĝi pasvorton je sekva elsaluto'
