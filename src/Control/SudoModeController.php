@@ -37,6 +37,7 @@ class SudoModeController extends LeftAndMain
      * @config
      * @var string
      */
+    // phpcs:ignore 
     private static $help_link = 'https://userhelp.silverstripe.org/en/4/optional_features/multi-factor_authentication/user_manual/managing_your_mfa_settings/#managing-your-mfa-settings';
 
     /**
