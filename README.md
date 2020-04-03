@@ -36,7 +36,7 @@ The default `SudoModeServiceInterface` implementation is `SudoModeService`, and 
 YAML. You should read the lifetime value using `SudoModeServiceInterface::getLifetime()`.
 
 ```yaml
-SilverStripe\SecurityExtensions\Services\SudoModeService:
+SilverStripe\SecurityExtensions\Service\SudoModeService:
   lifetime_minutes: 25
 ```
 
