@@ -165,7 +165,7 @@ const withSudoMode = (WrappedComponent) => {
         onKeyPress: this.handleVerifyInputKeyPress,
         innerRef: this.setPasswordInput,
       };
-      const validationProps = errorMessage ? { valid: false } : {};
+      const validationProps = errorMessage ? { valid: false, invalid: true } : {};
 
       return (
         <div className="sudo-mode__verify">
