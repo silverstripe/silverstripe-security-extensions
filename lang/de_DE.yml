@@ -1,0 +1,7 @@
+de_DE:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Passwort falsch'
+    MENUTITLE: ''
+    TIMEOUT: 'Sitzung wurde geschlossen, bitte aktualisieren und nochmals versuchen.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Beim nächsten Login muss das Passwort geändert werden.'
