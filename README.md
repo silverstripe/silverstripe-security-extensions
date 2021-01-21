@@ -1,6 +1,6 @@
 # SilverStripe Security Extensions
 
-[![Build Status](https://travis-ci.com/silverstripe/silverstripe-security-extensions.svg?branch=master)](https://travis-ci.com/silverstripe/silverstripe-security-extensions)
+[![Build Status](https://api.travis-ci.com/silverstripe/silverstripe-security-extensions.svg?branch=4)](https://travis-ci.com/silverstripe/silverstripe-security-extensions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/?branch=master)
 [![codecov](https://codecov.io/gh/silverstripe/silverstripe-security-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-security-extensions)
 [![License](https://poser.pugx.org/silverstripe/security-extensions/license.svg)](https://github.com/silverstripe/silverstripe-security-extensions#license)
