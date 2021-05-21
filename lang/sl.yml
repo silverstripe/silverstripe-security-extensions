@@ -1,0 +1,7 @@
+sl:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Napačno geslo'
+    MENUTITLE: SilverStripe\SecurityExtensions\Control\SudoModeController
+    TIMEOUT: 'Seja je potekla, osvežite stran in poskusite znova.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Ob naslednji prijavi zahtevaj spremembo gesla'
