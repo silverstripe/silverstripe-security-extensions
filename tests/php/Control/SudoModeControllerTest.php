@@ -23,7 +23,7 @@ class SudoModeControllerTest extends FunctionalTest
      */
     private $securityTokenEnabled;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class SudoModeControllerTest extends FunctionalTest
         $member->changePassword('0p3nS3samE!');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if ($this->securityTokenEnabled) {
             SecurityToken::enable();
