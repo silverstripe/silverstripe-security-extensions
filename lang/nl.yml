@@ -1,7 +1,7 @@
 nl:
   SilverStripe\SecurityExtensions\Control\SudoModeController:
     INVALID: 'Incorrect wachtwoord'
-    MENUTITLE: ''
+    MENUTITLE: SilverStripe\SecurityExtensions\Control\SudoModeController
     TIMEOUT: 'Sessie is verlopen, ververs en probeer het opnieuw.'
   SilverStripe\SecurityExtensions\Extension\MemberExtension:
     RequiresPasswordChangeOnNextLogin: 'Wachtwoord veranderen is verplicht bij volgende aanmelding'
