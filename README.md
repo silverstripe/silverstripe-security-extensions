@@ -1,15 +1,12 @@
-# SilverStripe Security Extensions
+# Silverstripe Security Extensions
 
 [![CI](https://github.com/silverstripe/silverstripe-security-extensions/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-security-extensions/actions/workflows/ci.yml)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-security-extensions/?branch=master)
-[![codecov](https://codecov.io/gh/silverstripe/silverstripe-security-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-security-extensions)
-[![License](https://poser.pugx.org/silverstripe/security-extensions/license.svg)](https://github.com/silverstripe/silverstripe-security-extensions#license)
-[![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
+[![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 ## Overview
 
 This module is a polyfill for some security related features that will become part of the core SilverStripe
-product, but are required for older SilverStripe 3.7 and 4.x support in the meantime.
+product, but are required for older Silverstripe 3.7 and 4.x support in the meantime.
 
 ## Installation
 
