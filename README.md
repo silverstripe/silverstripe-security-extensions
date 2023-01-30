@@ -8,6 +8,8 @@
 This module is a polyfill for some security related features that will become part of the core SilverStripe
 product, but are required for older Silverstripe 3.7 and 4.x support in the meantime.
 
+This module will _not_ be made compatible with CMS 5 - instead, its functionality has been folded back into the core modules.
+
 ## Installation
 
 ```
