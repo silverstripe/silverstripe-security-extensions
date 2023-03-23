@@ -1,7 +1,6 @@
 sv:
   SilverStripe\SecurityExtensions\Control\SudoModeController:
     INVALID: 'Fel lösenord'
-    MENUTITLE: ''
     TIMEOUT: 'Sessionen avbröts, vänligen ladda om och försök igen'
   SilverStripe\SecurityExtensions\Extension\MemberExtension:
     RequiresPasswordChangeOnNextLogin: 'Kräver ändring av lösenord vid nästa inloggning'
