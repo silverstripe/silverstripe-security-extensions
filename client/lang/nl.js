@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('nl', {
-    "SudoMode.VERIFY_ITS_YOU": "Verifieer dat dit je eerste is.",
-    "SudoMode.HELP_TEXT": "Wat is dit?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Bevestig om door te gaan",
     "SudoMode.ENTER_PASSWORD": "Voer wachtwoord in",
-    "SudoMode.VERIFY": "Bevestig"
+    "SudoMode.HELP_TEXT": "Wat is dit?",
+    "SudoMode.VERIFY": "Bevestig",
+    "SudoMode.VERIFY_ITS_YOU": "Verifieer dat dit je eerste is.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Bevestig om door te gaan"
 });
 }

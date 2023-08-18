@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('eo', {
-    "SudoMode.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
-    "SudoMode.HELP_TEXT": "Kio estas tio?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi",
     "SudoMode.ENTER_PASSWORD": "Enigu vian pasvorton",
-    "SudoMode.VERIFY": "Aŭtentigi"
+    "SudoMode.HELP_TEXT": "Kio estas tio?",
+    "SudoMode.VERIFY": "Aŭtentigi",
+    "SudoMode.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi"
 });
 }

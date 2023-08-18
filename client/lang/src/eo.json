@@ -1,7 +1,7 @@
 {
-    "SudoMode.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
-    "SudoMode.HELP_TEXT": "Kio estas tio?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi",
     "SudoMode.ENTER_PASSWORD": "Enigu vian pasvorton",
-    "SudoMode.VERIFY": "Aŭtentigi"
+    "SudoMode.HELP_TEXT": "Kio estas tio?",
+    "SudoMode.VERIFY": "Aŭtentigi",
+    "SudoMode.VERIFY_ITS_YOU": "Unue aŭtentigi vin.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Aŭtentigi por daŭrigi"
 }

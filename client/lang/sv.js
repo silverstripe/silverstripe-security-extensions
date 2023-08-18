@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('sv', {
-    "SudoMode.VERIFY_ITS_YOU": "Verify it's you first.",
-    "SudoMode.HELP_TEXT": "Vad är detta?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Verifiera för att fortsätta",
     "SudoMode.ENTER_PASSWORD": "Ange ditt lösenord",
-    "SudoMode.VERIFY": "Verifiera"
+    "SudoMode.HELP_TEXT": "Vad är detta?",
+    "SudoMode.VERIFY": "Verifiera",
+    "SudoMode.VERIFY_ITS_YOU": "Verify it's you first.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Verifiera för att fortsätta"
 });
 }
