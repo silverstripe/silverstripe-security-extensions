@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('sl', {
-    "SudoMode.VERIFY_ITS_YOU": "Najprej potrdite, da ste to res vi.",
-    "SudoMode.HELP_TEXT": "Kaj je to?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Za nadaljevanje potrdite",
     "SudoMode.ENTER_PASSWORD": "Vnesite vaše geslo",
-    "SudoMode.VERIFY": "Preveri"
+    "SudoMode.HELP_TEXT": "Kaj je to?",
+    "SudoMode.VERIFY": "Preveri",
+    "SudoMode.VERIFY_ITS_YOU": "Najprej potrdite, da ste to res vi.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Za nadaljevanje potrdite"
 });
 }

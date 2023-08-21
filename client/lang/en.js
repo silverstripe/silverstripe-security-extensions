@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('en', {
-    "SudoMode.VERIFY_ITS_YOU": "Verify it's you first.",
-    "SudoMode.HELP_TEXT": "What is this?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Verify to continue",
     "SudoMode.ENTER_PASSWORD": "Enter your password",
-    "SudoMode.VERIFY": "Verify"
+    "SudoMode.HELP_TEXT": "What is this?",
+    "SudoMode.VERIFY": "Verify",
+    "SudoMode.VERIFY_ITS_YOU": "Verify it's you first.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Verify to continue"
 });
 }

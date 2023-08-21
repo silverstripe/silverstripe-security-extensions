@@ -6,10 +6,10 @@ if (typeof(ss) === 'undefined' || typeof(ss.i18n) === 'undefined') {
   }
 } else {
   ss.i18n.addDictionary('da', {
-    "SudoMode.VERIFY_ITS_YOU": "Bekræft først at det er dig.",
-    "SudoMode.HELP_TEXT": "Hvad er dette?",
-    "SudoMode.VERIFY_TO_CONTINUE": "Bekræft for at forsætte",
     "SudoMode.ENTER_PASSWORD": "Indtast dit kodeord",
-    "SudoMode.VERIFY": "Bekræft"
+    "SudoMode.HELP_TEXT": "Hvad er dette?",
+    "SudoMode.VERIFY": "Bekræft",
+    "SudoMode.VERIFY_ITS_YOU": "Bekræft først at det er dig.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Bekræft for at forsætte"
 });
 }
