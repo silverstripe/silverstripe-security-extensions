@@ -1,0 +1,7 @@
+sk:
+  SilverStripe\SecurityExtensions\Control\SudoModeController:
+    INVALID: 'Nesprávne heslo'
+    MENUTITLE: SilverStripe\SecurityExtensions\Control\SudoModeController
+    TIMEOUT: 'Časový limit relácie vypršal, obnovte stránku a skúste to znova.'
+  SilverStripe\SecurityExtensions\Extension\MemberExtension:
+    RequiresPasswordChangeOnNextLogin: 'Pri ďalšom prihlásení sa vyžaduje zmena hesla'
