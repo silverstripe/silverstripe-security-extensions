@@ -1,0 +1,7 @@
+{
+    "SudoMode.ENTER_PASSWORD": "Zadajte svoje heslo",
+    "SudoMode.HELP_TEXT": "Čo je toto?",
+    "SudoMode.VERIFY": "Overiť",
+    "SudoMode.VERIFY_ITS_YOU": "Najprv overte, že ste to vy.",
+    "SudoMode.VERIFY_TO_CONTINUE": "Ak chcete pokračovať, overte"
+}
